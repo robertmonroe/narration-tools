@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(NarrationTools VERSION 1.0.0 LANGUAGES C CXX)
+project(NarrationTools VERSION 1.1.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -15,3 +15,6 @@ FetchContent_MakeAvailable(JUCE)
 
 add_subdirectory(BreathTamer)
 add_subdirectory(GlitchTamer)
+add_subdirectory(MouthTamer)
+add_subdirectory(PopTamer)
+add_subdirectory(RoomTamer)
