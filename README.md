@@ -11,7 +11,7 @@ through every chapter. These tools do it automatically and leave real speech
 alone:
 
 - **GlitchTamer** removes seam clicks, pops and static bursts, filling them with
-  the recording's own room tone. Real "t", "k" and "p" sounds are not touched.
+  the recording's own room tone. Real "t", "k", "p" and "g" sounds are not touched.
 - **BreathTamer** turns breaths down or removes them, keeping the room tone
   underneath so there are no dead-air holes.
 
@@ -44,8 +44,14 @@ protected.
 
 AI voice engines join generated audio chunks, and the joins ("seams") can leave
 **clicks/pops** and short **bursts of static** in the pauses. GlitchTamer repairs
-both with the recording's own room tone. A spike counts only when no speech
-follows it, so real "t", "k" and "p" sounds are left alone.
+both with the recording's own room tone.
+
+Consonants ("t", "k", "p", and word-final "g") are sharp too, so an event is
+repaired only when it is cut off from speech on both sides: nothing spoken right
+after it, and either no speech in the 150 ms before it or at least 30 ms of exact
+digital silence in between, which is where AI voices join their chunks. Work on
+the original TTS output (WAV) where possible: those silent gaps are the clearest
+sign of a seam.
 
 | Control | What it does |
 |---|---|

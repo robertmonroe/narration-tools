@@ -337,6 +337,8 @@ private:
             return m;
         };
         const float peak = maxLev (s, e - 1);
+        if (! pauseBefore (s))
+            return;
         if (maxLev (s - steps (80.0f), s - steps (10.0f)) >= quiet
             || maxLev (e + steps (30.0f), e + steps (100.0f)) >= quiet
             || peak >= speechAt[ri (d)] - 15.0f)
@@ -361,6 +363,35 @@ private:
         ++total;
         if (onGlitch)
             onGlitch (g);
+    }
+
+    // Seam glitches are separated from the preceding word; consonant releases
+    // ("g", "k", "t") are not. Separated means no speech in the 150 ms before, or
+    // at least 30 ms of exact digital silence in between (an AI chunk boundary).
+    bool pauseBefore (int64_t k) const
+    {
+        const float speechLine = speechAt[ri (k)] - 25.0f;
+        int zeroRun = 0;
+        bool speechSeen = false;
+        // Walk back from the event; the zeros must lie between it and the word.
+        for (int64_t j = k - steps (5.0f); j >= k - steps (150.0f); --j)
+        {
+            const float l = lev10[ri (j)];
+            if (l <= -139.9f) // the whole 10 ms window is exact zeros
+            {
+                if (++zeroRun >= steps (20.0f))
+                    return true;
+            }
+            else
+            {
+                zeroRun = 0;
+                if (j <= k - steps (10.0f) && l > speechLine)
+                    speechSeen = true;
+                if (speechSeen)
+                    return false;
+            }
+        }
+        return true;
     }
 
     // Keeps repair regions sorted by start and merges overlaps.
@@ -395,6 +426,9 @@ private:
         const float med = median (d - 40, d + 40);
         const float speech = speechAt[ri (d)];
         if (peak - med < th.jumpDb || med > speech - 22.0f)
+            return;
+
+        if (! pauseBefore (d))
             return;
 
         // A real consonant runs into speech; a seam glitch is followed by a pause.
