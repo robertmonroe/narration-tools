@@ -1,9 +1,23 @@
-# Narration Tools: BreathTamer & GlitchTamer
+# Narration Tools: tame AI voice glitches
 
-Free, open-source cleanup plugins for spoken-word audio: audiobooks, podcasts,
-voice-over, and especially **AI-generated narration**. Each tool comes as a
-**VST3 plugin**, a **standalone app** (open, play, export, batch) and a
-**command-line tool** for batch processing. Windows, 64-bit.
+**Free, open-source plugins that tame the glitches AI text-to-speech leaves in
+narration.** Built for AI-voiced audiobooks, podcasts and voice-over, and they
+work on human recordings too.
+
+AI TTS engines generate speech in chunks and stitch them together. The seams can
+leave **clicks, pops and bursts of static** in the pauses, and many AI voices add
+**breaths that are too loud or too frequent**. Fixing them by hand means hunting
+through every chapter. These tools do it automatically and leave real speech
+alone:
+
+- **GlitchTamer** removes seam clicks, pops and static bursts, filling them with
+  the recording's own room tone. Real "t", "k" and "p" sounds are not touched.
+- **BreathTamer** turns breaths down or removes them, keeping the room tone
+  underneath so there are no dead-air holes.
+
+Each tool comes as a **VST3 plugin** (REAPER and other DAWs), a **standalone app**
+(open, play, export, batch) and a **command-line tool** for batch processing
+whole books. Windows, 64-bit.
 
 | | |
 |---|---|
