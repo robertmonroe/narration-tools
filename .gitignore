@@ -1,0 +1,7 @@
+build/
+out/
+dist/
+*.wav
+*.mp3
+*.flac
+.vs/
